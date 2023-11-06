@@ -1,6 +1,5 @@
 ### 2 ways to make tree struct in table
 I chose the second Materialized Path - because max() working faster
-and Nested Set looks confusing
 
 ### 1. Recursion
 ````
@@ -15,9 +14,10 @@ parent_comment_id INT
 
 CREATE INDEX idx_created_at ON comments (created_at);
 CREATE INDEX idx_parent_comment_id ON comments (parent_comment_id);
-CREATE INDEX idx_parent_created_at ON comments (parent_comment_id, created_at);  WITH RECURSIVE CommentTree AS (
-SELECT
+CREATE INDEX idx_parent_created_at ON comments (parent_comment_id, created_at);
 
+WITH RECURSIVE CommentTree AS (
+SELECT
 comment_id,
 user_id,
 post_id,
@@ -39,8 +39,8 @@ c.parent_comment_id
 FROM CommentTree AS p
 JOIN comments AS c ON p.comment_id = c.parent_comment_id
 )
-SELECT * FROM CommentTree
-ORDER BY created_at DESC;
+
+SELECT * FROM CommentTree ORDER BY created_at DESC;
 ````
 
 | comment_id | user_id | post_id | comment_text | created_at         | parent_comment_id |
