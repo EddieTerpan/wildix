@@ -83,3 +83,14 @@ ORDER BY IFNULL(latest.latest_created_at, c.created_at) DESC, c.path;
 | 1          | 1       | 1       | Comment 1    | 2023-01-01 10:00  | NULL              | 1       | 2023-01-01 10:30  |
 | 2          | 2       | 1       | Comment 2    | 2023-01-01 10:15  | 1                 | 1/2     | 2023-01-01 10:30  |
 | 3          | 3       | 1       | Comment 3    | 2023-01-01 10:30  | 1                 | 1/3     | 2023-01-01 10:30  |
+
+### CURL Example
+````curl -X POST http://domain/api/v1/comment -H "Authorization: Bearer JWT_TOKEN" -H "Content-Type: application/json" -d '{"text":"New Comment Text","postId":1,"path":"1/6/300"}'````
+
+````curl -X GET http://domain/api/v1/comment/1 -H "Authorization: Bearer JWT_TOKEN"````
+
+````curl -X PUT http://domain/api/v1/comment/1 -H "Authorization: Bearer JWT_TOKEN" -H "Content-Type: application/json" -d '{"text":"Updated Comment Text","path":"1/6/300","postId":1}'````
+
+````curl -X DELETE http://domain/api/v1/comment/1 -H "Authorization: Bearer JWT_TOKEN"````
+
+````curl -X GET http://domain/api/v1/post/1/comments?page=1&perPage=10 -H "Authorization: Bearer JWT_TOKEN"````
